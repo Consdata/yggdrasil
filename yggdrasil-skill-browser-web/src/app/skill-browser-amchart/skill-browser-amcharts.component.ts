@@ -15,7 +15,7 @@ interface AmChartNode {
 @Component({
   selector: 'yg-skill-browser-amcharts',
   template: `
-      <div class="skill-tree"></div>
+      <div class="skill-tree mat-typography"></div>
   `,
   styleUrls: ['./skill-browser-amcharts.component.scss']
 })
