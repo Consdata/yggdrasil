@@ -1,8 +1,9 @@
 :host {
-  display: block;
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
 
   .amcharts-poc-div {
-    height: 1000px;
-    width: 100%;
+    flex: 1 0 auto;
   }
 }
