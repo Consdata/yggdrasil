@@ -18,6 +18,7 @@ public class MindMupToTreeConverter {
     private TreeNode parseNode(MindMupNode mindMupNode) {
         TreeNode result = new TreeNode();
         result.setTitle(mindMupNode.getTitle());
+        result.setId(mindMupNode.getId());
         if (mindMupNode.getIdeas() != null) {
             mindMupNode.getIdeas().forEach(
                     (nodeIndex, nodeValue) -> result.getChildNodes().add(parseNode(nodeValue)));

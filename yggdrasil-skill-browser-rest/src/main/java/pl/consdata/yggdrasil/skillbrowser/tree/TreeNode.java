@@ -14,5 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 class TreeNode {
     private String title;
+    private String id;
     private List<TreeNode> childNodes = new ArrayList<>();
 }
