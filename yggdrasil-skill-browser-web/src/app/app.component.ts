@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 
 @Component({
   selector: 'yg-root',
-  template: `
+  template: `    
       <yg-app-toolbar></yg-app-toolbar>
       <yg-skill-browser></yg-skill-browser>
   `,
