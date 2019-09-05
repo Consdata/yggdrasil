@@ -12,7 +12,7 @@ export class SkillTreeService {
   }
 
   tree(): Observable<SkillTree> {
-    return this.httpClient.get<SkillTree>('/api/skill-browser/v1/mocktree');
+    return this.httpClient.get<SkillTree>('/api/skill-browser/v1/tree');
   }
 
 }

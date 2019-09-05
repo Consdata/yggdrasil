@@ -6,11 +6,23 @@ import {combineLatest, Subject} from 'rxjs';
 import {SkillTree} from '../skill-tree/skill-tree';
 import {SkillTreeNode} from '../skill-tree/skill-tree-node';
 
-interface AmChartNode {
+interface FlatTreeNode {
   id: string;
-  name: string;
-  children: AmChartNode[];
+  title: string;
+  children: string[];
+  parent: string;
+  breadcrumb: string[];
 }
+
+interface TreeNode {
+  id: string;
+  title: string;
+  nodes: TreeNode[];
+  color: string;
+  links: string[];
+}
+
+type SkillTreeIndex = { [key: string]: FlatTreeNode };
 
 @Component({
   selector: 'yg-skill-browser-amcharts',
@@ -25,23 +37,17 @@ export class SkillBrowserAmchartsComponent implements OnInit, AfterViewInit, OnD
   private chart: am4plugins_forceDirected.ForceDirectedTree;
   private treeChange: Subject<SkillTree> = new Subject();
   private chartCreated: Subject<am4plugins_forceDirected.ForceDirectedTree> = new Subject();
+  private nodeIndex: SkillTreeIndex;
 
   constructor(private zone: NgZone) {
   }
 
   ngOnInit(): void {
     combineLatest(this.chartCreated, this.treeChange).subscribe(
-      pair => pair[0].data = this.mapToAmChartNode([pair[1].childNodes[0]])
-    );
-  }
-
-  private mapToAmChartNode(nodes: SkillTreeNode[]): AmChartNode[] {
-    return nodes.map(
-      node => ({
-        id: 'id',
-        name: node.title,
-        children: node.childNodes ? this.mapToAmChartNode(node.childNodes) : []
-      })
+      pair => {
+        this.nodeIndex = this.flatTree(pair[1]);
+        pair[0].data = this.buildTree('root');
+      }
     );
   }
 
@@ -57,19 +63,25 @@ export class SkillBrowserAmchartsComponent implements OnInit, AfterViewInit, OnD
 
       this.chart = am4core.create('skill-tree', am4plugins_forceDirected.ForceDirectedTree);
 
-      const skillsSerie = this.chart.series.push(new am4plugins_forceDirected.ForceDirectedSeries());
-      skillsSerie.maxLevels = 1;
-      skillsSerie.dataFields.name = 'name';
-      skillsSerie.dataFields.children = 'children';
-      skillsSerie.nodes.template.togglable = false;
-      skillsSerie.minRadius = am4core.percent(5);
-      skillsSerie.nodes.template.label.text = '{name}';
-      skillsSerie.fontSize = 14;
-      skillsSerie.nodes.template.expandAll = false;
-      skillsSerie.nodes.template.events.on(
+      const skillsSeries = this.chart.series.push(new am4plugins_forceDirected.ForceDirectedSeries());
+      skillsSeries.dataFields.name = 'title';
+      skillsSeries.dataFields.children = 'nodes';
+      skillsSeries.dataFields.linkWith = 'links';
+      skillsSeries.dataFields.color = 'color';
+      skillsSeries.dataFields.id = 'id';
+      skillsSeries.nodes.template.togglable = false;
+      skillsSeries.minRadius = am4core.percent(5);
+      skillsSeries.nodes.template.label.text = '{name}';
+      skillsSeries.fontSize = 14;
+      skillsSeries.nodes.template.label.truncate = true;
+
+      skillsSeries.colors.list = [am4core.color('black')];
+      skillsSeries.colors.wrap = false;
+
+      skillsSeries.nodes.template.events.on(
         'hit',
         (ev) => {
-          ev.target.setActive(!ev.target.isActive);
+          this.chart.data = this.buildTree((ev.target.dataItem.dataContext as TreeNode).id);
         },
         this
       );
@@ -84,6 +96,74 @@ export class SkillBrowserAmchartsComponent implements OnInit, AfterViewInit, OnD
         this.chart.dispose();
       }
     });
+  }
+
+  private flatTree(tree: SkillTree): SkillTreeIndex {
+    const nodes: SkillTreeIndex = {};
+    const travers = (node: SkillTreeNode, parent: string) => {
+      nodes[node.id] = {
+        id: node.id,
+        title: node.title,
+        children: (node.childNodes || []).map(node => node.id),
+        parent: parent,
+        breadcrumb: this.breadcrumb(nodes, parent)
+      };
+      (node.childNodes || []).forEach(child => travers(child, node.id));
+    };
+    travers(
+      {
+        id: 'root',
+        title: tree.childNodes[0].title, // tree.treeTitle,
+        childNodes: tree.childNodes[0].childNodes, // tree.childNodes
+      },
+      null
+    );
+    return nodes;
+  }
+
+  private breadcrumb(nodes: SkillTreeIndex, parent: string): string[] {
+    const breadcrumb = [];
+    let parentNode = nodes[parent];
+    while (parentNode) {
+      breadcrumb.push(parentNode.id);
+      parentNode = nodes[parentNode.parent];
+    }
+    return breadcrumb;
+  }
+
+  private buildTree(nodeId: string): TreeNode[] {
+    const node = this.nodeIndex[nodeId];
+    const breadcrumb = [];
+
+    let lastBread = node;
+    for (let bread of node.breadcrumb.map(breadcrumb => this.nodeIndex[breadcrumb])) {
+      breadcrumb.push({
+        id: bread.id,
+        title: bread.title,
+        nodes: [],
+        links: [lastBread.id],
+        color: '#2C3E50'
+      });
+      lastBread = bread;
+    }
+
+    let tree = [
+      {
+        id: node.id,
+        title: node.title,
+        nodes: node.children
+          .map(child => this.nodeIndex[child])
+          .map(child => ({
+            id: child.id,
+            title: child.title,
+            nodes: [],
+            color: '#16A085'
+          }))
+      },
+      ...breadcrumb
+    ];
+
+    return tree;
   }
 
 }
