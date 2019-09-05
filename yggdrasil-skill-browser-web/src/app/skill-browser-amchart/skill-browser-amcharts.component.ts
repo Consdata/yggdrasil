@@ -9,7 +9,6 @@ import {SkillTreeNode} from '../skill-tree/skill-tree-node';
 interface AmChartNode {
   id: string;
   name: string;
-  collapsed: boolean;
   children: AmChartNode[];
 }
 
@@ -32,11 +31,7 @@ export class SkillBrowserAmchartsComponent implements OnInit, AfterViewInit, OnD
 
   ngOnInit(): void {
     combineLatest(this.chartCreated, this.treeChange).subscribe(
-      pair => {
-        let data = this.mapToAmChartNode([pair[1].childNodes[0]]);
-        console.log(data);
-        pair[0].data = data;
-      }
+      pair => pair[0].data = this.mapToAmChartNode([pair[1].childNodes[0]])
     );
   }
 
@@ -45,7 +40,6 @@ export class SkillBrowserAmchartsComponent implements OnInit, AfterViewInit, OnD
       node => ({
         id: 'id',
         name: node.title,
-        collapsed: true,
         children: node.childNodes ? this.mapToAmChartNode(node.childNodes) : []
       })
     );
@@ -64,28 +58,18 @@ export class SkillBrowserAmchartsComponent implements OnInit, AfterViewInit, OnD
       this.chart = am4core.create('skill-tree', am4plugins_forceDirected.ForceDirectedTree);
 
       const skillsSerie = this.chart.series.push(new am4plugins_forceDirected.ForceDirectedSeries());
-      // skillsSerie.maxLevels = 2;
-      // skillsSerie.dataFields.value = 'value';
+      skillsSerie.maxLevels = 1;
       skillsSerie.dataFields.name = 'name';
       skillsSerie.dataFields.children = 'children';
-      skillsSerie.dataFields.collapsed = 'collapsed';
-      // skillsSerie.nodes.template.fillOpacity = 1;
-      // skillsSerie.manyBodyStrength = -20;
-      // skillsSerie.links.template.strength = 0.8;
+      skillsSerie.nodes.template.togglable = false;
       skillsSerie.minRadius = am4core.percent(5);
       skillsSerie.nodes.template.label.text = '{name}';
       skillsSerie.fontSize = 14;
-
+      skillsSerie.nodes.template.expandAll = false;
       skillsSerie.nodes.template.events.on(
         'hit',
         (ev) => {
-          // console.log('clicked on ', ev.target);
-          //     let dataItem = ev.target.dataItem;
-          //     // skillsSerie.nodes.each((node) => {
-          //     // TODO - wyuzdany if sprawdzajacy, czy danego node'a nalezy schowac
-          //     // if (uznamy w naszym wyuzdanym algorytmie ze tego node'a nalezy zwinac)
-          //     //   node.setActive(false)
-          //     // });
+          ev.target.setActive(!ev.target.isActive);
         },
         this
       );
