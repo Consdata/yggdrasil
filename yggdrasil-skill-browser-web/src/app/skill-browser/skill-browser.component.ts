@@ -7,10 +7,10 @@ import {SkillTreeService} from '../skill-tree/skill-tree.service';
   selector: 'yg-skill-browser',
   template: `
       <div class="switch-view">
-          <button (click)="view = 'blank'">hide</button>
-          <button (click)="view = 'json'">json</button>
-          <button (click)="view = 'd3'">d3</button>
-          <button (click)="view = 'amcharts'">amcharts</button>
+          <button mat-stroked-button (click)="view = 'blank'">hide</button>
+          <button mat-stroked-button (click)="view = 'json'">json</button>
+          <button mat-stroked-button (click)="view = 'd3'">d3</button>
+          <button mat-stroked-button (click)="view = 'amcharts'">amcharts</button>
       </div>
       <div *ngIf="view === 'json'">
           <b>raw json</b>

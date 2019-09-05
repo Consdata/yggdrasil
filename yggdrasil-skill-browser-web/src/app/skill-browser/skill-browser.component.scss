@@ -2,5 +2,8 @@
   display: block;
   .switch-view {
     margin-bottom: 16px;
+    button {
+      margin: 0 4px;
+    }
   }
 }
