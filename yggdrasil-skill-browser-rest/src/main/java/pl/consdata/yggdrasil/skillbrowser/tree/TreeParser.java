@@ -21,12 +21,11 @@ public class TreeParser {
         MindMupMap map = null;
         try {
             Gson gson = new Gson();
-            Resource resource = new ClassPathResource(filePath);
-            FileReader fileReader = new FileReader(resource.getFile());
+            FileReader fileReader = new FileReader(filePath);
             map = gson.fromJson(fileReader, MindMupMap.class);
-            log.info("test");
         } catch (IOException e) {
             log.error("Could not read file with path = {}", filePath);
+            return null;
         }
         return mindMupToTreeConverter.mindMupToTree(map);
     }
