@@ -15,8 +15,8 @@ public class SkillTreeController {
 
     @GetMapping("/tree")
     public Tree getRealTree() {
-        return treeParser.getParsedTree();
+        return treeGetter.getTree();
     }
 
-    private final TreeParser treeParser;
+    private final TreeGetter treeGetter;
 }
