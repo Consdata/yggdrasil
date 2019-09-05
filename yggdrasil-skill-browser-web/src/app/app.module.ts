@@ -1,6 +1,6 @@
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
-import {MatButtonModule, MatToolbarModule} from '@angular/material';
+import {MatButtonModule, MatDialogModule, MatToolbarModule} from '@angular/material';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppToolbarComponent} from './app-toolbar/app-toolbar.component';
@@ -13,12 +13,13 @@ import {SkillBrowserComponent} from './skill-browser/skill-browser.component';
     AppComponent,
     SkillBrowserComponent,
     SkillBrowserAmchartsComponent,
-    AppToolbarComponent
+    AppToolbarComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatDialogModule,
     MatButtonModule,
     MatToolbarModule
   ],
