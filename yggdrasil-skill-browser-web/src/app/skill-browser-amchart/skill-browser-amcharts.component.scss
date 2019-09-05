@@ -1,8 +1,9 @@
 :host {
-  display: block;
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
 
   .skill-tree {
-    height: 650px;
-    width: 100%;
+    flex: 1 0 auto;
   }
 }

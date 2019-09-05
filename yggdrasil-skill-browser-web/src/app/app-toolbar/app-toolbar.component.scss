@@ -1,3 +1,11 @@
 :host {
   display: block;
+
+  .mat-toolbar.mat-primary {
+    background: #2C3E50;
+  }
+
+  .yggdrasil-logo {
+    height: 100%;
+  }
 }
