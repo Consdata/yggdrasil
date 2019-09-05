@@ -6,18 +6,8 @@ import {SkillTreeService} from '../skill-tree/skill-tree.service';
 @Component({
   selector: 'yg-skill-browser',
   template: `
-      <div class="switch-view">
-          <button mat-stroked-button (click)="view = 'blank'">hide</button>
-          <button mat-stroked-button (click)="view = 'json'">json</button>
-          <button mat-stroked-button (click)="view = 'd3'">d3</button>
-          <button mat-stroked-button (click)="view = 'amcharts'">amcharts</button>
-      </div>
-      <div *ngIf="view === 'json'">
-          <b>raw json</b>
-          <pre>{{ tree$ | async | json }}</pre>
-      </div>
-      <yg-skill-browser-d3 [tree]="tree$ | async" *ngIf="view === 'd3'"></yg-skill-browser-d3>
-      <yg-skill-browser-amcharts [tree]="tree$ | async" *ngIf="view === 'amcharts'"></yg-skill-browser-amcharts>
+      <yg-skill-browser-amcharts [tree]="tree$ | async">
+      </yg-skill-browser-amcharts>
   `,
   styleUrls: ['./skill-browser.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -25,7 +15,6 @@ import {SkillTreeService} from '../skill-tree/skill-tree.service';
 export class SkillBrowserComponent implements OnInit {
 
   tree$: Observable<SkillTree>;
-  view: 'json' | 'amcharts' | 'd3' | 'blank' = 'blank';
 
   constructor(private service: SkillTreeService) {
   }
