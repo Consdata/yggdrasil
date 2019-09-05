@@ -1,4 +1,4 @@
 export interface SkillTreeNode {
-  label: string;
-  nodes: SkillTreeNode[];
+  title: string;
+  childNodes: SkillTreeNode[];
 }
