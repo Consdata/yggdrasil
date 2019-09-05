@@ -11,10 +11,10 @@ class MockTree {
 
         List<TreeNode> nodes = Arrays.asList(
                 TreeNode.builder().title("Company Man")
-                        .childrenNodes(
+                        .childNodes(
                         Arrays.asList(
                                 TreeNode.builder().title("OpenSource")
-                                .childrenNodes(Arrays.asList(
+                                .childNodes(Arrays.asList(
                                         TreeNode.builder().title("Heimdall").build(),
                                         TreeNode.builder().title("Kafka Companion").build(),
                                         TreeNode.builder().title("SonarQube Companion").build(),
@@ -24,28 +24,28 @@ class MockTree {
                                 .build(),
                                 TreeNode.builder()
                                         .title("blot.condata.tech")
-                                        .childrenNodes(Arrays.asList(
+                                        .childNodes(Arrays.asList(
                                                 TreeNode.builder().title("support").build(),
                                                 TreeNode.builder().title("posts").build()
                                         ))
                                         .build(),
                                 TreeNode.builder()
                                         .title("Consdathon")
-                                        .childrenNodes(Arrays.asList(
+                                        .childNodes(Arrays.asList(
                                                 TreeNode.builder().title("organiser").build(),
                                                 TreeNode.builder().title("paricipant").build()
                                         ))
                                         .build(),
                                 TreeNode.builder()
                                         .title("Konferencje")
-                                        .childrenNodes(Arrays.asList(
+                                        .childNodes(Arrays.asList(
                                                 TreeNode.builder().title("wystapienia").build()
                                         ))
                                         .build()
                         )
                 ).build()
                 , TreeNode.builder().title("temp")
-                        .childrenNodes(
+                        .childNodes(
                                 Arrays.asList(
                                         TreeNode.builder().title("znajomość osx")
                                                 .build(),
@@ -54,13 +54,13 @@ class MockTree {
                                                 .build(),
                                         TreeNode.builder()
                                                 .title("ppliszko")
-                                                .childrenNodes(Arrays.asList(
+                                                .childNodes(Arrays.asList(
                                                         TreeNode.builder()
                                                                 .title("Frontend")
-                                                                .childrenNodes(Arrays.asList(
+                                                                .childNodes(Arrays.asList(
                                                                         TreeNode.builder()
                                                                                 .title("HTML")
-                                                                                .childrenNodes(Arrays.asList(
+                                                                                .childNodes(Arrays.asList(
                                                                                         TreeNode.builder().title("HTML5").build(),
                                                                                         TreeNode.builder().title("znajomość standardu").build(),
                                                                                         TreeNode.builder().title("semantyczny html").build(),
@@ -73,7 +73,7 @@ class MockTree {
                                                                                 .build(),
                                                                         TreeNode.builder()
                                                                                 .title("web components")
-                                                                                .childrenNodes(Arrays.asList(
+                                                                                .childNodes(Arrays.asList(
                                                                                         TreeNode.builder().title("custom elements").build(),
                                                                                         TreeNode.builder().title("shadow dom").build(),
                                                                                         TreeNode.builder().title("polymer").build(),
