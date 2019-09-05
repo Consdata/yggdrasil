@@ -13,7 +13,7 @@ import {SkillTreeService} from '../skill-tree/skill-tree.service';
           <button (click)="view = 'amcharts'">amcharts</button>
       </div>
       <div *ngIf="view === 'json'">
-          <b>amcharts</b>
+          <b>raw json</b>
           <pre>{{ tree$ | async | json }}</pre>
       </div>
       <yg-skill-browser-d3 [tree]="tree$ | async" *ngIf="view === 'd3'"></yg-skill-browser-d3>
