@@ -18,7 +18,8 @@ import java.io.IOException;
 public class TreeParser {
 
     Tree getParsedTree() {
-        MindMupMap map = null;
+        log.info("Trying to parse tree from file");
+        MindMupMap map;
         try {
             Gson gson = new Gson();
             FileReader fileReader = new FileReader(filePath);

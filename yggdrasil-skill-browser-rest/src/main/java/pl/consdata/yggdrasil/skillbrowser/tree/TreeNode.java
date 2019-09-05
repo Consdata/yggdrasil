@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 class TreeNode {
-
     private String title;
     private List<TreeNode> childNodes = new ArrayList<>();
 }
