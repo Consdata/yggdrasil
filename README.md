@@ -1,1 +1,1 @@
-![yggdrasil](yggdrasil.png "Yggdrasil")
+![yggdrasil](yggdrasil.svg "Yggdrasil")
