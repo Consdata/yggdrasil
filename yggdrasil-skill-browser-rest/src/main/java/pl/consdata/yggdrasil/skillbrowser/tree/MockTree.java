@@ -1,4 +1,4 @@
-package pl.consdata.yggdrasil.skillbrowser.mindmup;
+package pl.consdata.yggdrasil.skillbrowser.tree;
 
 import java.util.Arrays;
 import java.util.List;

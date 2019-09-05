@@ -1,4 +1,4 @@
-package pl.consdata.yggdrasil.skillbrowser.mindmup;
+package pl.consdata.yggdrasil.skillbrowser.tree;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
