@@ -1,7 +1,5 @@
 ![yggdrasil](docs/yggdrasil.png "Yggdrasil")
 
-# Yggdrasil
-
 [![Build Status](https://travis-ci.org/Consdata/yggdrasil.svg?branch=master)](https://travis-ci.org/Consdata/yggdrasil)
 
 ## Contribute
