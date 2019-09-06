@@ -1,11 +1,11 @@
 dist/
 target/
 build/
-.idea
+.idea/*
+!.idea/runConfigurations
 *.iml
 node_modules/
 !.mvn/wrapper/maven-wrapper.jar
 .gradle
 data/
 .DS_Store
-!.idea/runConfigurations

@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class VersionController {
+class VersionController {
 
     @GetMapping
     public String versionGet() {

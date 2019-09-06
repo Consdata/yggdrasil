@@ -1,12 +1,18 @@
 package pl.consdata.yggdrasil.skillbrowser.tree;
 
-import lombok.Data;
+import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
-class Tree {
-    private String treeTitle;
-    private List<TreeNode> childNodes = new ArrayList<>();
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Tree {
+
+    private String id;
+    private String title;
+    @Singular
+    private List<TreeNode> children;
+
 }

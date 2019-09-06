@@ -2,11 +2,12 @@ package pl.consdata.yggdrasil.skillbrowser.mindmup;
 
 import lombok.Data;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Data
-public class MindMupNode {
+class MindMupNode {
     private String id;
     private String title;
-    private Map<String, MindMupNode> ideas;
+    private Map<String, MindMupNode> ideas = new HashMap<>();
 }

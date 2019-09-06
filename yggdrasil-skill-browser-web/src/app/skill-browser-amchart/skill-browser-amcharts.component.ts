@@ -114,17 +114,17 @@ export class SkillBrowserAmchartsComponent implements OnInit, AfterViewInit, OnD
       nodes[node.id] = {
         id: node.id,
         title: node.title,
-        children: (node.childNodes || []).map(node => node.id),
+        children: (node.children || []).map(node => node.id),
         parent: parent,
         breadcrumb: this.breadcrumb(nodes, parent)
       };
-      (node.childNodes || []).forEach(child => travers(child, node.id));
+      (node.children || []).forEach(child => travers(child, node.id));
     };
     travers(
       {
         id: 'root',
-        title: tree.childNodes[0].title, // tree.treeTitle,
-        childNodes: tree.childNodes[0].childNodes, // tree.childNodes
+        title: tree.children[0].title,
+        children: tree.children[0].children,
       },
       null
     );
