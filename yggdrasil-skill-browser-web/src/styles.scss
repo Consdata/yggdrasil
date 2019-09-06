@@ -1,14 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~normalize.css";
 @import "theme/reset-bootstrap-reboot";
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
-html,
-body {
-    height: 100%;
-}
-
-/** Force pointer cursor event for nodes without children */
-.skill-tree g[role="menuitem"] {
-    cursor: pointer !important;
-}
+@import "theme/layout";
+@import "theme/theme";
+@import "theme/amcharts";
