@@ -2,10 +2,10 @@ import {AfterViewInit, ChangeDetectionStrategy, Component, NgZone, OnDestroy, On
 import {combineLatest, Subject} from 'rxjs';
 import {SkillTree} from '../skill-tree/skill-tree';
 import {SkillTreeService} from '../skill-tree/skill-tree.service';
-import {SkillTreeNode} from "../skill-tree/skill-tree-node";
+import {SkillTreeNode} from '../skill-tree/skill-tree-node';
 
 import * as am4core from '@amcharts/amcharts4/core';
-import * as am4plugins_forceDirected from '@amcharts/amcharts4/plugins/forceDirected'
+import * as am4plugins_forceDirected from '@amcharts/amcharts4/plugins/forceDirected';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 
 interface FlatTreeNode {
@@ -24,7 +24,9 @@ interface TreeNode {
     links: string[];
 }
 
-type SkillTreeIndex = { [key: string]: FlatTreeNode };
+interface SkillTreeIndex {
+    [key: string]: FlatTreeNode;
+}
 
 @Component({
     selector: 'yg-skill-browser',
@@ -107,8 +109,8 @@ export class SkillBrowserComponent implements OnInit, OnDestroy, AfterViewInit {
             nodes[node.id] = {
                 id: node.id,
                 title: node.title,
-                children: (node.children || []).map(node => node.id),
-                parent: parent,
+                children: (node.children || []).map(n => n.id),
+                parent,
                 breadcrumb: this.breadcrumb(nodes, parent)
             };
             (node.children || []).forEach(child => travers(child, node.id));
@@ -139,7 +141,7 @@ export class SkillBrowserComponent implements OnInit, OnDestroy, AfterViewInit {
         const breadcrumb = [];
 
         let lastBread = node;
-        for (let bread of node.breadcrumb.map(breadcrumb => this.nodeIndex[breadcrumb])) {
+        for (const bread of node.breadcrumb.map(br => this.nodeIndex[br])) {
             breadcrumb.push({
                 id: bread.id,
                 title: bread.title,
@@ -150,7 +152,7 @@ export class SkillBrowserComponent implements OnInit, OnDestroy, AfterViewInit {
             lastBread = bread;
         }
 
-        let tree = [
+        return [
             {
                 id: node.id,
                 title: node.title,
@@ -165,8 +167,6 @@ export class SkillBrowserComponent implements OnInit, OnDestroy, AfterViewInit {
             },
             ...breadcrumb
         ];
-
-        return tree;
     }
 
 }
