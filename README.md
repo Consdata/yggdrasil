@@ -1,8 +1,4 @@
-
-
-
-
-
+![yggdrasil](docs/yggdrasil.png "Yggdrasil")
 
 # Yggdrasil
 
