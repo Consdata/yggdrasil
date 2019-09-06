@@ -4,8 +4,8 @@ build/
 .idea
 *.iml
 node_modules/
+!.mvn/wrapper/maven-wrapper.jar
 .gradle
 data/
 .DS_Store
-
 !.idea/runConfigurations
