@@ -61,7 +61,9 @@ html {
 // Wrap `@viewport` with `@at-root` for when folks do a nested import (e.g.,
 // `.class-name { @import "bootstrap"; }`).
 @at-root {
-    @-ms-viewport { width: device-width; }
+    @-ms-viewport {
+        width: device-width;
+    }
 }
 
 
@@ -84,7 +86,7 @@ html {
     -ms-overflow-style: scrollbar;
 
     // Changes the default tap highlight to be completely transparent in iOS.
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 // Suppress the focus outline on elements that cannot be accessed via keyboard.

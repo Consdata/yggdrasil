@@ -5,10 +5,10 @@
 
 html,
 body {
-  height: 100%;
+    height: 100%;
 }
 
 /** Force pointer cursor event for nodes without children */
 .skill-tree g[role="menuitem"] {
-  cursor: pointer !important;
+    cursor: pointer !important;
 }

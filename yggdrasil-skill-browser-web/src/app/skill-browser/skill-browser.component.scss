@@ -1,12 +1,10 @@
 :host {
-  display: flex;
-  flex-direction: column;
-  flex: 1 0 auto;
-  overflow: hidden;
-  .switch-view {
-    margin-bottom: 16px;
-    button {
-      margin: 0 4px;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    overflow: hidden;
+
+    .skill-tree {
+        flex: 1 0 auto;
     }
-  }
 }
