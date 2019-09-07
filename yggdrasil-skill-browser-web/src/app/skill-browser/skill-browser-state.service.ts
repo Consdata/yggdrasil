@@ -98,7 +98,7 @@ export class SkillBrowserState {
                 title: bread.title,
                 nodes: [],
                 links: [lastBread.id],
-                color: '#2C3E50'
+                color: '#2C3E50',
             });
             lastBread = bread;
         }
@@ -112,12 +112,23 @@ export class SkillBrowserState {
                     .map(child => ({
                         id: child.id,
                         title: child.title,
-                        nodes: [],
-                        color: child.children.length > 0 ? '#16A085' : '#2ecc71'
-                    }))
+                        nodes: child.children.length > 0 ? [this.collapsedChildNode()] : [],
+                        color: child.children.length > 0 ? '#16A085' : '#2ecc71',
+                        collapsed: true
+                    })),
             },
             ...breadcrumb
         ];
+    }
+
+    private collapsedChildNode(): TreeNode {
+        return {
+            id: 'hidden-node',
+            color: '',
+            links: [],
+            nodes: [],
+            title: 'hidden-node'
+        };
     }
 
 }

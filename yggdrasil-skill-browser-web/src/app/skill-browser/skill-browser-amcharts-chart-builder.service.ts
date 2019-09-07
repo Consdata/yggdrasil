@@ -13,6 +13,7 @@ export class SkillBrowserAmchartsChartBuilder {
         skillsSeries.dataFields.children = 'nodes';
         skillsSeries.dataFields.linkWith = 'links';
         skillsSeries.dataFields.color = 'color';
+        skillsSeries.dataFields.collapsed = 'collapsed';
         skillsSeries.dataFields.id = 'id';
         skillsSeries.nodes.template.togglable = false;
         skillsSeries.minRadius = am4core.percent(5);
@@ -28,8 +29,9 @@ export class SkillBrowserAmchartsChartBuilder {
 
         if (hitConsumer) {
             skillsSeries.nodes.template.events.on(
+                // @ts-ignore
                 'hit',
-                (ev) => hitConsumer(ev.target.dataItem.dataContext)
+                ev => hitConsumer(ev.target.dataItem.dataContext)
             );
         }
 
