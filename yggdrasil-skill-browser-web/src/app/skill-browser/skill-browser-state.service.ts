@@ -30,6 +30,7 @@ export class SkillBrowserState {
     readonly tree$: Subject<TreeNode[]> = new Subject();
 
     private nodeIndex: SkillTreeIndex;
+    private currentNode: string;
 
     constructor(private skillTree: SkillTreeService) {
     }
@@ -37,13 +38,17 @@ export class SkillBrowserState {
     init() {
         this.skillTree.tree().subscribe(tree => {
             this.nodeIndex = this.flatTree(tree);
-            this.tree$.next(this.buildTree('root'));
+            this.currentNode = this.nodeIndex.root.id;
+            this.tree$.next(this.buildTree(this.currentNode));
         });
     }
 
     nodeSelected(node: TreeNode): void {
         if (this.nodeIndex[node.id].children.length > 0) {
-            this.tree$.next(this.buildTree(node.id));
+            if (this.currentNode !== node.id) {
+                this.currentNode = node.id;
+                this.tree$.next(this.buildTree(node.id));
+            }
         } else {
             console.log('Tutej będą newsy na temat tego cuda');
         }
