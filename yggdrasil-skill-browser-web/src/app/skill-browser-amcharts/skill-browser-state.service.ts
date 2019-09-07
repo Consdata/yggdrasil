@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 import {SkillTree} from '../skill-tree/skill-tree';
 import {SkillTreeNode} from '../skill-tree/skill-tree-node';
-import {SkillTreeService} from '../skill-tree/skill-tree.service';
 
 interface TreeNode {
     id: string;
@@ -32,15 +31,13 @@ export class SkillBrowserState {
     private nodeIndex: SkillTreeIndex;
     private currentNode: string;
 
-    constructor(private skillTree: SkillTreeService) {
+    constructor() {
     }
 
-    init() {
-        this.skillTree.tree().subscribe(tree => {
-            this.nodeIndex = this.flatTree(tree);
-            this.currentNode = this.nodeIndex.root.id;
-            this.tree$.next(this.buildTree(this.currentNode));
-        });
+    setTree(tree: SkillTree) {
+        this.nodeIndex = this.flatTree(tree);
+        this.currentNode = this.nodeIndex.root.id;
+        this.tree$.next(this.buildTree(this.currentNode));
     }
 
     nodeSelected(node: TreeNode): void {

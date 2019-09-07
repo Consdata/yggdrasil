@@ -1,50 +1,38 @@
-import * as am4plugins_forceDirected from '@amcharts/amcharts4/plugins/forceDirected';
-import {AfterViewInit, ChangeDetectionStrategy, Component, NgZone, OnDestroy, OnInit} from '@angular/core';
-import {combineLatest, Subject} from 'rxjs';
-import {SkillBrowserAmchartsChartBuilder} from './skill-browser-amcharts-chart-builder.service';
-import {SkillBrowserState} from './skill-browser-state.service';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
+import {SkillTree} from '../skill-tree/skill-tree';
+import {SkillTreeService} from '../skill-tree/skill-tree.service';
 
 @Component({
     selector: 'yg-skill-browser',
     template: `
-        <div class="skill-tree mat-typography"></div>
+        <div class="toggle-graph-lib">
+            <mat-button-toggle-group #group="matButtonToggleGroup">
+                <mat-button-toggle value="amcharts">
+                    amcharts
+                </mat-button-toggle>
+                <mat-button-toggle value="visjs">
+                    visjs
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <yg-skill-browser-amcharts [tree]="tree$ | async" *ngIf="group.value === 'amcharts'">
+        </yg-skill-browser-amcharts>
+        <yg-skill-browser-visjs [tree]="tree$ | async" *ngIf="group.value === 'visjs'">
+        </yg-skill-browser-visjs>
     `,
     styleUrls: ['./skill-browser.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        SkillBrowserState, SkillBrowserAmchartsChartBuilder
-    ]
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SkillBrowserComponent implements OnInit, OnDestroy, AfterViewInit {
+export class SkillBrowserComponent implements OnInit {
 
-    private chart$: Subject<am4plugins_forceDirected.ForceDirectedTree> = new Subject();
-    private destroy$: Subject<void> = new Subject();
+    tree$: Observable<SkillTree>;
 
-    constructor(private state: SkillBrowserState, private chartBuilder: SkillBrowserAmchartsChartBuilder, private zone: NgZone) {
+    constructor(private skillTree: SkillTreeService) {
     }
 
-    ngOnInit() {
-        this.state.init();
-        combineLatest(this.chart$, this.state.tree$).subscribe(
-            ([chart, tree]) => chart.data = tree
-        );
-        combineLatest(this.chart$, this.destroy$).subscribe(
-            ([chart]) => this.zone.runOutsideAngular(() => chart.dispose())
-        );
-    }
-
-    ngAfterViewInit(): void {
-        this.zone.runOutsideAngular(() => {
-            const chart = this.chartBuilder.buildChart(
-                'skill-tree',
-                node => this.state.nodeSelected(node as any)
-            );
-            this.chart$.next(chart);
-        });
-    }
-
-    ngOnDestroy() {
-        this.destroy$.next();
+    ngOnInit(): void {
+        this.tree$ = this.skillTree.tree();
     }
 
 }
