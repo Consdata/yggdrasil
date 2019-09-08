@@ -10,6 +10,7 @@ import {AppComponent} from './app.component';
 import {SkillBrowserAmchartsComponent} from './skill-browser-amcharts/skill-browser-amcharts.component';
 import {SkillBrowserVisjsComponent} from './skill-browser-visjs/skill-browser-visjs.component';
 import {SkillBrowserComponent} from './skill-browser/skill-browser.component';
+import { SkillBrowserD3Component } from './skill-browser-d3/skill-browser-d3.component';
 
 @NgModule({
     declarations: [
@@ -18,6 +19,7 @@ import {SkillBrowserComponent} from './skill-browser/skill-browser.component';
         AppToolbarComponent,
         SkillBrowserAmchartsComponent,
         SkillBrowserVisjsComponent,
+        SkillBrowserD3Component,
     ],
     imports: [
         BrowserModule,

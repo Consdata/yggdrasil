@@ -1,0 +1,13 @@
+:host {
+    display: block;
+    .skill-tree ::ng-deep .node {
+        cursor: pointer;
+        circle {
+            fill: #16a085;
+        }
+        text {
+            font-size: 14px;
+            fill: #1b2837;
+        }
+    }
+}

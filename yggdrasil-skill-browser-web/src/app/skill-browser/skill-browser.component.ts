@@ -14,12 +14,17 @@ import {SkillTreeService} from '../skill-tree/skill-tree.service';
                 <mat-button-toggle value="visjs">
                     visjs
                 </mat-button-toggle>
+                <mat-button-toggle value="d3">
+                    d3
+                </mat-button-toggle>
             </mat-button-toggle-group>
         </div>
         <yg-skill-browser-amcharts [tree]="tree$ | async" *ngIf="group.value === 'amcharts'">
         </yg-skill-browser-amcharts>
         <yg-skill-browser-visjs [tree]="tree$ | async" *ngIf="group.value === 'visjs'">
         </yg-skill-browser-visjs>
+        <yg-skill-browser-d3 [tree]="tree$ | async" *ngIf="group.value === 'd3'">
+        </yg-skill-browser-d3>
     `,
     styleUrls: ['./skill-browser.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
