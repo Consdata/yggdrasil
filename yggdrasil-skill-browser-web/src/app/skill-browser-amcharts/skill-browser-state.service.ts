@@ -52,6 +52,7 @@ export class SkillBrowserState {
     }
 
     private flatTree(tree: SkillTree): SkillTreeIndex {
+        console.log(tree);
         const nodes: SkillTreeIndex = {};
         const travers = (node: SkillTreeNode, parent: string) => {
             nodes[node.id] = {
@@ -66,8 +67,8 @@ export class SkillBrowserState {
         travers(
             {
                 id: 'root',
-                title: tree.children[0].title,
-                children: tree.children[0].children,
+                title: tree.title,
+                children: tree.children,
             },
             null
         );
