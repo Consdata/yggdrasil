@@ -14,7 +14,7 @@
     "@amcharts/amcharts4": "^4.5.16",
     "@angular/animations": "^8.2.5",
     "@angular/cdk": "^8.1.4",
-    "@angular/common": "~8.2.4",
+    "@angular/common": "~8.2.14",
     "@angular/compiler": "~8.2.4",
     "@angular/core": "~8.2.4",
     "@angular/forms": "~8.2.4",
