@@ -7,7 +7,7 @@ import {UnauthenticatedApp} from './unauthenticated-app';
 
 const AppWrapperView = ({bootstrapped}: ViewProps) => {
   useEffect(() => {
-    bootstrapped()
+    bootstrapped();
   }, []);
   return <StylesProvider injectFirst>
     <UnauthenticatedApp/>

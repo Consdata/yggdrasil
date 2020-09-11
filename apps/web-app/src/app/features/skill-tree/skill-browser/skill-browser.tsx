@@ -11,7 +11,7 @@ const CenteredDiv = styled.div`
 `;
 
 const StyledCard = styled(Card)`
-    width: 600px;
+  width: 600px;
 `;
 
 const SkillBrowserView = ({category, children}: ViewProps) => <CenteredDiv>
@@ -31,7 +31,7 @@ interface ViewProps extends ConnectedProps<typeof connector> {
 const connector = connect(
   (state: AppState) => ({
     category: state.skillTree.nodes.byId.root,
-    children: state.skillTree.nodes.byId.root.children.map(child => state.skillTree.nodes.byId[child]),
+    children: state.skillTree.nodes.byId.root.children.map(child => state.skillTree.nodes.byId[child])
   }),
   {}
 );
