@@ -112,12 +112,6 @@ const connector = connect(
     const active = getNode(breadcrumbs[breadcrumbs.length - 1].id);
     const children = childLinks(active.children);
     const siblings = siblingLinks(breadcrumbs[breadcrumbs.length - 2]?.id, active.id,)
-    console.log({
-      active,
-      children,
-      breadcrumbs,
-      siblings,
-    })
 
     return ({
       active,

@@ -11,7 +11,7 @@ export const skillTreeStateInitial: SkillTreeState = {
       'frontend': {
         id: 'frontend',
         name: 'Frontend',
-        children: ['frameworks']
+        children: ['frameworks', 'memes']
       },
       'webdev': {
         id: 'webdev',
@@ -40,6 +40,10 @@ export const skillTreeStateInitial: SkillTreeState = {
       'security': {
         id: 'security',
         name: 'Security'
+      },
+      'memes': {
+        id: 'memes',
+        name: 'Memy',
       },
       'frameworks': {
         id: 'frameworks',
