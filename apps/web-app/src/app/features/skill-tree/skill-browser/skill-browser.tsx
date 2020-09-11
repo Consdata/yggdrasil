@@ -1,124 +1,87 @@
-import {Card, CardContent, Link} from '@material-ui/core';
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import {AppState} from '../../../state/app-state';
-import {SkillBrowserBreadcrumbs} from "./breadcrumbs";
-import {LinkModel} from "./link.model";
 
-const CenteredDiv = styled.div`
+const View = styled.div`
+`;
+const Main = styled.div`
+  display: flex;
+`;
+const LeftPanel = styled.div`
+  flex-basis: 250px;
+`;
+const RightPanel = styled.div`
+  flex: 1;
+`;
+const NodeBreadcrumb = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 32px;
+`;
+const CurrentNode = styled.div`
+  font-weight: 500;
+`;
+const Nodes = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const NodeLink = styled(Link)`
+  margin-left: ${(props: { indent: number }) => props.indent * 8 ?? 0}px;
 `;
 
-const StyledCard = styled(Card)`
-  width: 600px;
-
-  .child-links {
-    padding-left: 16px;
-  }
-
-   .link {
-      display: block;
-   }
-`;
-
-const SkillBrowserView = ({children, breadcrumbs, siblings}: ViewProps) => <CenteredDiv>
-  <StyledCard>
-    <SkillBrowserBreadcrumbs breadcrumbs={breadcrumbs}/>
-    <CardContent>
-      <div className="child-links">
-        {children.map((child, idx) =>
-          <Link color='inherit' className="link" key={idx} href={child.href}>
-            {child.label}
-          </Link>)}
-      </div>
-      <div className="sibling-links">
-        {siblings.map((child, idx) =>
-          <Link color='inherit' className="link" key={idx} href={child.href}>
-            {child.label}
-          </Link>)}
-      </div>
-    </CardContent>
-  </StyledCard>
-</CenteredDiv>;
+const SkillBrowserView = ({category, breadcrumb}: ViewProps) => <View>
+  <Main>
+    <LeftPanel>
+      <NodeBreadcrumb>
+        {breadcrumb.map((crumb, idx) => <NodeLink indent={idx}
+                                                  key={crumb.id}
+                                                  to={`/skills?p=/${crumb.path.join('/')}`}>
+          {crumb.name}
+        </NodeLink>)}
+      </NodeBreadcrumb>
+      <CurrentNode>
+        <NodeLink indent={breadcrumb.length}
+                  to={`/skills?p=/${category.path.join('/')}`}>
+          {category.name}
+        </NodeLink>
+      </CurrentNode>
+      {category.children?.length > 0 ? <Nodes>
+        {category.children.map(child => <NodeLink indent={breadcrumb.length + 1}
+                                                  key={child.id}
+                                                  to={`/skills?p=/${child.path.join('/')}`}>
+          {child.name}
+        </NodeLink>)}
+      </Nodes> : undefined}
+      {category.siblings?.length > 0 ? <Nodes>
+        {category.siblings.map(child => <NodeLink indent={breadcrumb.length}
+                                                  key={child.id}
+                                                  to={`/skills?p=/${child.path.join('/')}`}>
+          {child.name}
+        </NodeLink>)}
+      </Nodes> : undefined}
+    </LeftPanel>
+    <RightPanel>
+      The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of
+      charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will
+      strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. And you will know My name is the
+      Lord when I lay My vengeance upon thee.
+    </RightPanel>
+  </Main>
+</View>;
 
 interface ViewProps extends ConnectedProps<typeof connector> {
 }
 
-const pathParamName = 'path';
-
 const connector = connect(
   (state: AppState) => {
-
-    const path = new URLSearchParams(location.search).get(pathParamName) || 'root';
-    const getNode = id => state.skillTree.nodes.byId[id];
-
-    const redirectLink = (breadcrumbs: string) => {
-      const params = new URLSearchParams(state.router.location.search);
-      params.set(pathParamName, breadcrumbs);
-      return state.router.location.pathname + '?' + params.toString();
-    }
-
-    const breadcrumbLinks = () => {
-      const breadcrumbs: LinkModel[] = [];
-      const parts = path.split('/');
-      parts.forEach((id, idx) => {
-        const parentPath = breadcrumbs.map(b => b.id).join('/');
-        breadcrumbs.push({
-          id,
-          label: getNode(id).name,
-          href: redirectLink(parentPath ? parentPath + '/' + id : id),
-        })
-      })
-      return breadcrumbs;
-    }
-
-    const childLinks = (children: string[] = []) => {
-      return children.map(childId => {
-        const child = getNode(childId);
-        return {
-          id: childId,
-          label: child.name,
-          href: redirectLink(path + '/' + child.id)
-        }
-      })
-    }
-
-    const siblingLinks = (parentId: string, activeId: string) => {
-      if (!parentId) {
-        return [];
-      }
-      const parent = getNode(parentId);
-      return (parent?.children || [])
-        .filter(c => c !== activeId)
-        .map(childId => {
-          const child = getNode(childId);
-          const parts = path.split('/');
-          parts.pop();
-          const parentPath = parts.join('/');
-
-          return {
-            id: childId,
-            label: child.name,
-            href: redirectLink(parentPath + '/' + child.id)
-          }
-        })
-    }
-
-    const breadcrumbs = breadcrumbLinks();
-    const active = getNode(breadcrumbs[breadcrumbs.length - 1].id);
-    const children = childLinks(active.children);
-    const siblings = siblingLinks(breadcrumbs[breadcrumbs.length - 2]?.id, active.id,)
-
-    return ({
-      active,
-      children,
-      breadcrumbs,
-      siblings,
-    });
+    const path = state.router.location['query']?.p?.split('/').filter(part => !!part);
+    const nodesById = state.skillTree.nodes.byId;
+    const category = path?.length > 0 ? nodesById[path[path.length - 1]] : nodesById.root;
+    return {
+      category: category,
+      breadcrumb: category.breadcrumbs[0]
+    };
   },
   {}
 );
