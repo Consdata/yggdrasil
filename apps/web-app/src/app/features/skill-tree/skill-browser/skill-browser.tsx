@@ -1,3 +1,4 @@
+import {Card, CardContent, CardHeader} from '@material-ui/core';
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
@@ -62,10 +63,15 @@ const SkillBrowserView = ({category, breadcrumb}: ViewProps) => <View>
       </Nodes> : undefined}
     </LeftPanel>
     <RightPanel>
-      The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of
-      charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will
-      strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. And you will know My name is the
-      Lord when I lay My vengeance upon thee.
+      <Card>
+        <CardHeader title={category.name} subheader={breadcrumb.map(crumb => crumb.name).join(' / ')} />
+        <CardContent>
+          The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of
+          charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will
+          strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. And you will know My name is the
+          Lord when I lay My vengeance upon thee.
+        </CardContent>
+      </Card>
     </RightPanel>
   </Main>
 </View>;
@@ -77,7 +83,7 @@ const connector = connect(
   (state: AppState) => {
     const path = state.router.location['query']?.p?.split('/').filter(part => !!part);
     const nodesById = state.skillTree.nodes.byId;
-    const category = path?.length > 0 ? nodesById[path[path.length - 1]] : nodesById.root;
+    const category = path?.length > 0 ? nodesById[path[path.length - 1]] : nodesById[1];
     return {
       category: category,
       breadcrumb: category.breadcrumbs[0]
