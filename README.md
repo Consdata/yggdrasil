@@ -12,19 +12,7 @@ TBD
 
 ## Building
 
-In order to build the Yggdrasil, ensure that you have JDK installed.
-
-Clone a copy of the repo:
-
-```bash
-git clone git@github.com:Consdata/yggdrasil.git
-```
-
-Build app using Maven Wrapper
-
-```bash
-./mvnw clean package
-```
+TBD
 
 ## Usage
 
