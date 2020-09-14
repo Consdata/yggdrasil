@@ -11,7 +11,7 @@ const Main = styled.div`
   display: flex;
 `;
 const LeftPanel = styled.div`
-  flex-basis: 250px;
+  flex-basis: 300px;
 `;
 const RightPanel = styled.div`
   flex: 1;
